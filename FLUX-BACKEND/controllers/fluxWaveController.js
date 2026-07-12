@@ -141,7 +141,37 @@ const getRegistrationStatus = asyncHandler(async (req, res) => {
     });
 });
 
+// @desc    Get all registrations
+// @route   GET /api/fluxwave/registrations
+// @access  Private/Admin
+const getAllRegistrations = asyncHandler(async (req, res) => {
+    const registrations = await FluxWaveRegistration.find({}).sort({ createdAt: -1 });
+    res.status(200).json({
+        success: true,
+        count: registrations.length,
+        data: registrations,
+    });
+});
+
+// @desc    Delete a registration
+// @route   DELETE /api/fluxwave/registrations/:id
+// @access  Private/Admin
+const deleteRegistration = asyncHandler(async (req, res) => {
+    const registration = await FluxWaveRegistration.findById(req.params.id);
+    if (!registration) {
+        res.status(404);
+        throw new Error("Registration record not found");
+    }
+    await registration.deleteOne();
+    res.status(200).json({
+        success: true,
+        message: "Registration purged successfully",
+    });
+});
+
 module.exports = {
     registerParticipant,
     getRegistrationStatus,
+    getAllRegistrations,
+    deleteRegistration,
 };
