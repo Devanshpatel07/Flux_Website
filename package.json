@@ -1,0 +1,14 @@
+{
+  "name": "flux-workspace",
+  "version": "1.0.0",
+  "description": "Root workspace workspace to manage FLUX backend and frontend",
+  "scripts": {
+    "install:backend": "npm install --prefix FLUX-BACKEND",
+    "install:frontend": "npm install --prefix FLUX-FRONTEND",
+    "install-all": "npm run install:backend && npm run install:frontend",
+    "seed": "cd FLUX-BACKEND && node seeder.js",
+    "backend": "npm run dev --prefix FLUX-BACKEND",
+    "frontend": "npm run dev --prefix FLUX-FRONTEND",
+    "dev": "npx --yes concurrently -n backend,frontend -c bgBlue,bgGreen \"npm run backend\" \"npm run frontend\""
+  }
+}
